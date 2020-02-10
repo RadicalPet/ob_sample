@@ -3,7 +3,7 @@ from django.db import models
 class Comment(models.Model):
     """Minimal Comment model, implementing only fields needed for sample application""" 
     author = models.CharField(max_length=511)
-    body = models.IntegerField()
+    body = models.TextField()
     created_at = models.DateTimeField()
 
 
@@ -16,3 +16,4 @@ class Repo(models.Model):
     name = models.CharField(max_length=511)
     url = models.URLField()
     languages = models.ManyToManyField(ProgLanguage)
+    created_at = models.DateTimeField()

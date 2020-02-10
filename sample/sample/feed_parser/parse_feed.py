@@ -1,6 +1,8 @@
 import os
 import requests
 
+from dateutil.parser import parse
+
 from django.db import transaction
 
 from django.conf import settings
@@ -20,13 +22,13 @@ class Parser(object):
 
 
     def get_all_repos(self, save=False):
-        #payload = {'list': ','.join(map(str, self.product_ids))}
         r = requests.get(self.API_repo_list, headers=self.auth_header)
         all_repos = r.json()
         if save:
             for repo in all_repos:
                 name = repo['name']
                 url = os.path.join(self.repo_host, repo['full_name'])
+                created_at = parse(repo['created_at'])
                 rl = requests.get(os.path.join(self.API_repo, name, 'languages'), headers=self.auth_header)
                 language_ids = []
                 for language in rl.json().keys():
@@ -47,13 +49,15 @@ class Parser(object):
     def get_all_commit_comments(self, repo_name_list, save=False):
         comments = []
         for repo in repo_name_list:
-            repo_url = urljoin(self.repo, repo)
-            r = requests.get(repo_url)
-            comment_full = r.json()
-            comment = {'body': comment_full['body'], 'username': comment_full['user']['login'], 'date': comment_full['created_at']}
-            comments.append(comment)
-            if save:
-                comment.save()
-        transaction.commit()
-
+            repo_comments_url = os.path.join(self.API_repo, repo, 'comments')
+            r = requests.get(repo_comments_url)
+            repo_comments = r.json()
+            for comment_full in repo_comments:
+                body = comment_full['body']
+                username = comment_full['user']['login']
+                created_at = parse(comment_full['created_at'])
+                comment = Comment(body=body, author=username, created_at=created_at)
+                if save:
+                    comment.save()
+                comments.append(comment.__dict__)
         return comments
