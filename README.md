@@ -6,6 +6,7 @@
 - python manage.py migrate
 - python manage.py createsuperuser
 - python manage.py getfeed
+- python manager.py runserver
 
 
 ### API URLS
