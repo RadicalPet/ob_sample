@@ -2,11 +2,12 @@
 
 ## Setup
 
-- pip install -r requirements.txt
-- python manage.py migrate
-- python manage.py createsuperuser
-- python manage.py getfeed
-- python manage.py runserver
+- `pip install -r requirements.txt`
+- export a github auth token to the environment (`export AUTH_TOKEN=xxxxxxxxxxx`)
+- `python manage.py migrate`
+- `python manage.py createsuperuser`
+- `python manage.py getfeed`
+- `python manage.py runserver`
 
 
 ### API URLS
