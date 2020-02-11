@@ -1,20 +1,22 @@
+from rest_framework import generics, viewsets
+
 from feed_parser.models import *
-from rest_framework import viewsets
-from feed_parser.serializers import RepoSerializer, CommentSerializer, ProgLanguageSerializer
-from rest_framework import generics
+from feed_parser.serializers import (CommentSerializer, ProgLanguageSerializer,
+                                     RepoSerializer)
 
 
 class RepoViewSet(generics.ListAPIView):
     """
     API endpoint 
     """
+
     serializer_class = RepoSerializer
 
     def get_queryset(self):
-        limit = self.request.query_params.get('limit', None)
-        queryset = Repo.objects.all().order_by('-created_at')
+        limit = self.request.query_params.get("limit", None)
+        queryset = Repo.objects.all().order_by("-created_at")
         if limit is not None:
-            queryset = queryset[:int(limit)]
+            queryset = queryset[: int(limit)]
         return queryset
 
 
