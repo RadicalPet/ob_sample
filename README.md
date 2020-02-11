@@ -2,11 +2,11 @@
 
 ## Setup
 
-- pip install requirements.txt
+- pip install -r requirements.txt
 - python manage.py migrate
 - python manage.py createsuperuser
 - python manage.py getfeed
-- python manager.py runserver
+- python manage.py runserver
 
 
 ### API URLS
