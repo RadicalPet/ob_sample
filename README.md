@@ -14,10 +14,10 @@
 Log in with superuser credentials from previous step.
 
 * http://localhost:8000/api/languages
-** lists languages from all Shopify (the organization) repos
+  * lists languages from all Shopify (the organization) repos
 
 * http://localhost:8000/api/comments
-** lists all commit comments on the 3 Shopify sample repos
+  * lists all commit comments on the 3 Shopify sample repos
 
 * http://localhost:8000/api/repos?limit=50
-** lists the 50 recent-most created repos of the Shopify organization
+  * lists the 50 recent-most created repos of the Shopify organization
