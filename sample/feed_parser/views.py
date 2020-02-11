@@ -26,5 +26,5 @@ class CommentViewSet(generics.ListAPIView):
 
 
 class ProgLanguageViewSet(generics.ListAPIView):
-    serializer_class = ProgLanguage
+    serializer_class = ProgLanguageSerializer
     queryset = ProgLanguage.objects.all()
