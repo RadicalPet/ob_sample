@@ -33,7 +33,7 @@ class Parser(object):
                 language_ids = []
                 for language in rl.json().keys():
                     language_ids.append(ProgLanguage.objects.get_or_create(name=language)[0].id)
-                repo = Repo(name=name, url=url)
+                repo = Repo(name=name, url=url, created_at=created_at)
                 repo.save()
                 repo.languages.add(*language_ids)
 
@@ -52,12 +52,13 @@ class Parser(object):
             repo_comments_url = os.path.join(self.API_repo, repo, 'comments')
             r = requests.get(repo_comments_url)
             repo_comments = r.json()
-            for comment_full in repo_comments:
-                body = comment_full['body']
-                username = comment_full['user']['login']
-                created_at = parse(comment_full['created_at'])
-                comment = Comment(body=body, author=username, created_at=created_at)
-                if save:
-                    comment.save()
-                comments.append(comment.__dict__)
+            if repo_comments:
+                for comment_full in repo_comments:
+                    body = comment_full['body']
+                    username = comment_full['user']['login']
+                    created_at = parse(comment_full['created_at'])
+                    comment = Comment(body=body, author=username, created_at=created_at)
+                    if save:
+                        comment.save()
+                    comments.append(comment.__dict__)
         return comments

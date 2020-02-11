@@ -125,8 +125,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-        'PAGE_SIZE': 10
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
 }
 
 
@@ -136,3 +137,7 @@ GITHUB_ORG = 'Shopify'
 GITHUB_OWNER = 'shopify'
 
 AUTH_TOKEN = os.environ.get('AUTH_TOKEN')
+
+with open('sample_repos.csv', 'r') as repos:
+    csv_reader = reader(repos)
+    SAMPLE_REPOS = list(csv_reader)[0]
